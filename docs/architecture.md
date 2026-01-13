@@ -71,3 +71,4 @@ Son rôle : Il contient les outils dont tous les contrôleurs ont besoin. Le plu
 L'avantage : Dans ton VehiculesController, il suffira d'appeler $this->render('detail', $vehicule) pour afficher la page.
 
 ## Mots-clés : Encapsulation, Héritage, Abstraction, Polymorphisme
+Le polymorphisme, c'est la capacité d'objets différents à répondre à la même commande de manières différentes.
