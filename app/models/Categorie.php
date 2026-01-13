@@ -20,12 +20,16 @@ class Categorie extends BaseModel
         return $this->vehicules;
     }
     public function save(): bool
-    {
-        $sql="INSERT INTO categories('nom') Values (':nom')";
-        $stmt=$this->pdo->prepare($sql);
-        return $stmt->execute([
-        'nom' => $this->nom
-    ]);
+    {   
+        if($this->id===0){
+            $sql="INSERT INTO categories('nom') Values (':nom')";
+            $stmt=$this->pdo->prepare($sql);
+            return $stmt->execute(['nom' => $this->nom]);
+        } else {
+             $sql="UPDATE categories SET  nom=:nom where id=:id";
+             $stmt=$this->pdo->prepare($sql);
+            return $stmt->execute(['id'=> $this->id ,'nom' => $this->nom]);
+        }
     }
     public function loadVehicules():void{
     $sql = "SELECT * FROM vehicules WHERE categorie_id = :id";
