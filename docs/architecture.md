@@ -27,7 +27,36 @@ vehicules/detail.php : La page qui affiche les informations détaillées d'un v�
 
 ## Flux requête :
 URL → index.php (Routeur) → Controller → Model → View
+1. L'URL : Le point de départ
+Tout commence quand l'utilisateur tape une adresse ou clique sur un lien (ex: mabagnole/vehicule/voir/5). Cette URL contient l'intention de l'utilisateur : "Je veux voir le véhicule avec l'ID 5".
 
+2. index.php (Le Routeur) : L'aiguilleur
+Dans un projet MVC, toutes les requêtes arrivent au même endroit : index.php.
+
+Son rôle : Il analyse l'URL. Il se demande : "Quelle page est demandée ?".
+
+L'action : Il fait appel à l'Autoloader pour charger les bons fichiers, puis il passe la main au bon Contrôleur.
+
+3. Le Controller : Le cerveau
+C'est lui qui prend les décisions. Il ne sait pas faire de SQL, et il ne sait pas faire de HTML. Il se contente de commander les autres.
+
+Son rôle : Réceptionner la demande de index.php.
+
+L'action : Il demande au Modèle : "Donne-moi les infos de la voiture n°5". Une fois qu'il a les infos, il appelle la Vue.
+
+4. Le Model : Le bibliothécaire
+Le Modèle est le seul qui a le droit de parler à la base de données (database.php).
+
+Son rôle : Gérer les données.
+
+L'action : Il va chercher la ligne correspondante en SQL, il prépare les données proprement, et il les renvoie au Contrôleur.
+
+5. La View : L'artiste
+C'est la fin du voyage. La Vue reçoit les données mais ne sait pas d'où elles viennent.
+
+Son rôle : L'affichage.
+
+L'action : Elle prend les infos (Marque, Prix, Photo) et les injecte dans ton HTML (avec tes fichiers header.php et footer.php). C'est ce que l'utilisateur voit enfin sur son écran.
 ## Classes :
 - BaseModel (abstrait) ← Categorie, Vehicule (héritage)
 - BaseController (abstrait)
