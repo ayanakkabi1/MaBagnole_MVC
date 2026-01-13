@@ -54,5 +54,16 @@ class Categorie extends BaseModel
     $stmt->execute(['id' => $this->id]);
 
     $this->vehicules = [];
+     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $this->vehicules[] = new Vehicule(
+            self::$pdo,
+            $row['id'],
+            $row['marque'],
+            $row['modele'],
+            $row['prix'],
+            $row['categorie_id']
+        );
     }
+    }
+
 }
