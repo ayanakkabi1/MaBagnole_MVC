@@ -7,11 +7,4 @@ spl_autoload_register(function ($class) {
         require_once $filename;
     }
 });
-// TEST: Try to use the class
-try {
-    $myTest = new Test();
-    $myTest->sayHello();
-} catch (Error $e) {
-    echo "Autoloader failed: " . $e->getMessage();
-}
 ?>
