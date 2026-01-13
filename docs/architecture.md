@@ -60,5 +60,14 @@ L'action : Elle prend les infos (Marque, Prix, Photo) et les injecte dans ton HT
 ## Classes :
 - BaseModel (abstrait) ← Categorie, Vehicule (héritage)
 - BaseController (abstrait)
+1. BaseModel (Abstrait)
+Une classe abstraite ne peut pas être instanciée seule (on ne fait jamais new BaseModel()).
+Son rôle : Elle contient la connexion à la base de données (PDO) et les méthodes universelles.
+L'avantage : Les classes Categorie et Vehicule héritent de tout cela automatiquement. Tu n'as pas besoin de réécrire la connexion SQL dans chaque fichier.
+
+2. BaseController (Abstrait)
+Son rôle : Il contient les outils dont tous les contrôleurs ont besoin. Le plus commun est une méthode render($view, $data) qui permet d'afficher une vue en lui passant des variables.
+
+L'avantage : Dans ton VehiculesController, il suffira d'appeler $this->render('detail', $vehicule) pour afficher la page.
 
 ## Mots-clés : Encapsulation, Héritage, Abstraction, Polymorphisme
