@@ -27,27 +27,29 @@ class Vehicule
             throw new Exception("Propriété $name inexistante");
         }
 
-        switch ($name) {
-            case 'prix':
-                if (!is_numeric($value) || $value < 0) {
-                    return null;
-                }
-                $this->prix = (float) $value;
-                break;
-
-            case 'modele':
-                if (empty($value)) {
-                    return null;
-                }
-                $this->modele = $value;
-                break;
-
-            case 'categorie_id':
-                $this->categorie_id = (int) $value;
-                break;
-
-            default:
-                $this->$name = $value;
+       switch ($name) {
+    case 'prix':
+        $value = filter_var($value, FILTER_VALIDATE_FLOAT);
+        if ($value === false || $value < 0) {
+            throw new InvalidArgumentException("Prix invalide");
         }
+        $this->prix = $value;
+        break;
+
+    case 'modele':
+        $value = trim($value);
+        if ($value === '') {
+            throw new InvalidArgumentException("Le modèle ne peut pas être vide");
+        }
+        $this->modele = $value;
+        break;
+
+    case 'categorie_id':
+        $this->categorie_id = (int) $value;
+        break;
+
+    default:
+        throw new InvalidArgumentException("Propriété $name inconnue");
 }
+    }
 }
