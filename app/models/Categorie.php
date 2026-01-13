@@ -22,7 +22,7 @@ class Categorie extends BaseModel
     public function save(): bool
     {   
         if($this->id===0){
-            $sql="INSERT INTO categories('nom') Values (':nom')";
+            $sql="INSERT INTO categories(nom) Values (:nom)";
             $stmt=$this->pdo->prepare($sql);
             return $stmt->execute(['nom' => $this->nom]);
         } else {
@@ -30,6 +30,23 @@ class Categorie extends BaseModel
              $stmt=$this->pdo->prepare($sql);
             return $stmt->execute(['id'=> $this->id ,'nom' => $this->nom]);
         }
+    }
+    public static function find(int $id){
+        $sql = "SELECT * FROM categories WHERE id = :id";
+    $stmt = self::$pdo->prepare($sql);
+    $stmt->execute(['id' => $id]);
+
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$row) {
+        return null;
+    }
+
+    return new Categorie(
+        self::$pdo,
+        $row['id'],
+        $row['nom']
+    );
     }
     public function loadVehicules():void{
     $sql = "SELECT * FROM vehicules WHERE categorie_id = :id";
