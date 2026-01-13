@@ -19,4 +19,19 @@ class Categorie extends BaseModel
     public function getVehicules():array{
         return $this->vehicules;
     }
+    public function save(): bool
+    {
+        $sql="INSERT INTO categories('nom') Values (':nom')";
+        $stmt=$this->pdo->prepare($sql);
+        return $stmt->execute([
+        'nom' => $this->nom
+    ]);
+    }
+    public function loadVehicules():void{
+    $sql = "SELECT * FROM vehicules WHERE categorie_id = :id";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute(['id' => $this->id]);
+
+    $this->vehicules = [];
+    }
 }
