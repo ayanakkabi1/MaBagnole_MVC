@@ -41,6 +41,21 @@ class User extends BaseModel
             $this->$name = $value;
         }
     }
+    public static function login(string $email, string $password, PDO $pdo): ?User 
+    {
+        $sql = "SELECT * FROM users WHERE email = :email LIMIT 1";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(['email' => $email]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row && password_verify($password, $row['mot_de_passe_hash'])) {
+            $user = new self($pdo, $row['nom'], $row['email'], $row['role'], (int)$row['id']);
+            $user->mot_de_passe_hash = $row['mot_de_passe_hash'];
+            return $user;
+        }
+
+        return null;
+    }
     public function save(): bool
 {   
     if ($this->id === 0) {
